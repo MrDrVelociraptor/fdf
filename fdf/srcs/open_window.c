@@ -6,39 +6,11 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:20:24 by nspeedy           #+#    #+#             */
-/*   Updated: 2021/12/13 15:34:39 by nspeedy          ###   ########.fr       */
+/*   Updated: 2021/12/14 17:20:02 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-typedef struct s_image
-{
-	void	*img;
-	char	*addr;
-	int		width;
-	int		height;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_image;
-
-typedef struct s_mlx {
-	void	*mlx;
-	void	*win;
-}	t_mlx;
-
-typedef struct s_pixel {
-	int	x;
-	int	y;
-	int	colour;
-}	t_pixel;
-
-typedef struct s_vector {
-	int x;
-	int y;
-	int z;
-}	t_vector;
 
 void	put_pixel(t_image *img, int x, int y, int colour)
 {
@@ -98,9 +70,6 @@ void	put_quad(t_image *img, int x, int y, int w, int h, int c)
 		}
 		i++;
 	}
-	/*for (int i = x; i < x + (w/2); i++)
-		for (int j = y; j < y + (h/2); j++)
-			put_pixel(img, i, j, c);*/
 }
 
 int	main(void)
