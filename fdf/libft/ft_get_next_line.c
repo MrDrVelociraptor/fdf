@@ -6,7 +6,7 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 08:55:51 by nspeedy           #+#    #+#             */
-/*   Updated: 2021/12/08 14:48:44 by nspeedy          ###   ########.fr       */
+/*   Updated: 2021/12/20 12:06:31 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*gnl_append_new_line(char *line)
 	return (store);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
 	char		*buf;
 	char		*line;
