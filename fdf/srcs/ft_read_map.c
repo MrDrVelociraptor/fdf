@@ -6,14 +6,13 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 13:26:18 by nspeedy           #+#    #+#             */
-/*   Updated: 2022/01/13 13:25:36 by nspeedy          ###   ########.fr       */
+/*   Updated: 2022/01/13 14:44:24 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"fdf.h"
 #include	"libft.h"
 
-f:wq
 
 static int	cntsplit(char **splits)
 {
@@ -29,23 +28,27 @@ static int	cntsplit(char **splits)
 	return (i);
 }
 
-static void	getdimensions(char *file, t_map *data)
+static void	getdimensions(char *file, t_data *data)
 {
 	int		fd;
 	char	*read;
 
 	fd = open(file, O_RDONLY);
+	ft_printf("%i\n", fd);
 	while (1)
 	{
 		read = ft_get_next_line(fd);
 		if (!read)
 			break;
+		ft_printf("%s", read);
 		if (data->width == 0)
 			data->width = cntsplit(ft_split(read, ' '));
 		data->height++;
 		free(read);
 	}
-	close(fd);
+	//ft_printf("%i\n", close(fd));
+	ft_printf("\n");
+	ft_printf("%i - %i\n", data->height, data->width);
 }
 
 void	fill_map(int *points, char *line)
@@ -65,31 +68,46 @@ void	fill_map(int *points, char *line)
 	free(line);
 }
 
-void	read_fdf(char *filename, t_map *data)
+void	read_fdf(char *filename, t_data *ptr)
 {
 	int	i;
 	int	fd;
 
-	getdimensions(filename, data);
-	ft_printf("%i\n %i\n %i\n", data->height, data->width, data->height*data->width);
-	data->coord = (int **)malloc(sizeof(int *) * data->height);
+	ft_printf("Start\n");
+	ft_printf("%i - %i\n", ptr->height, ptr->width);
+	getdimensions(filename, ptr);
+	ft_printf("%i\n %i\n", ptr->height, ptr->width);
+	ptr->map = (int **)malloc(sizeof(int *) * ptr->height);
 	i = 0;
-	while (i < data->height)
-		data->coord[i++] = (int *)malloc(sizeof(int) * data->width);
+	while (i < ptr->height)
+		ptr->map[i++] = (int *)malloc(sizeof(int) * ptr->width);
 	fd = open(filename, O_RDONLY);
 	i = 0;
-	while (i < data->height)
+	while (i < ptr->height)
 	{
-		fill_map(data->coord[i], ft_get_next_line(fd));
+		fill_map(ptr->map[i], ft_get_next_line(fd));
 		i++;
 	}
 }
 
-int main(void)
+#include <stdio.h>
+int main(int argc, char **argv)
 {
-	t_map	data;
+	t_data	data;
 
-	read_fdf(filname, &data);
+	if (argc == 1)
+		ft_printf("%s", "Nope\n");
+	if (argc == 2) 
+	{
+		ft_printf("%s\n", "fuck this shit");
+		ft_bzero(&data, sizeof(t_data));
+		read_fdf(argv[1], &data);
+		for(int i =0; i < data.height; i++){
+			for(int j = 0; j < data.width; j++)
+				printf("%2i ", data.map[i][j]);
+			printf("\n");
+		}
+	}
 	return (0);
 }
 
