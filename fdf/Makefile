@@ -6,7 +6,7 @@
 #    By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/10 16:11:55 by nspeedy           #+#    #+#              #
-#    Updated: 2021/12/10 17:38:18 by nspeedy          ###   ########.fr        #
+#    Updated: 2022/01/13 14:32:37 by nspeedy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC = includes
 
 LIBS = -L$(MLX) -lmlx -L$(LIBFT) -lft
 HEADERS = -I$(INC) -I$(MLX) -I$(LIBFT)
-FLAGS = -Wall -Werror -Wextra $(LIBS) $(HEADERS) -framework OpenGL -framework AppKit
+FLAGS = $(LIBS) $(HEADERS) -framework OpenGL -framework AppKit
 
 all:
 	make -s -C $(MLX)

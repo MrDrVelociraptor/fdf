@@ -6,7 +6,7 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 13:33:18 by nspeedy           #+#    #+#             */
-/*   Updated: 2021/12/20 11:21:30 by nspeedy          ###   ########.fr       */
+/*   Updated: 2022/01/19 15:06:55 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,20 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdarg.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct the_args
+{
+	va_list	args;
+	int		counter;
+}	t_args;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -68,5 +76,12 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_get_next_line(int fd);
-
+int		ft_printf(const char *str, ...);
+void	ft_char(t_args *arg);
+void	ft_string(t_args *arg);
+void	ft_pointer(t_args *arg);
+void	ft_hex(t_args *arg, char c);
+void	ft_int(t_args *arg);
+void	ft_unsigned(t_args *arg);
+void	ft_freearry(void **arry);
 #endif

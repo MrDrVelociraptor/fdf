@@ -6,7 +6,7 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:39:44 by nspeedy           #+#    #+#             */
-/*   Updated: 2022/01/20 13:45:24 by nspeedy          ###   ########.fr       */
+/*   Updated: 2022/01/21 13:06:50 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ t_vector	**parsemap(t_map *map, char *file)
 
 static t_vector normalize(t_map *map, t_vector p)
 {
-	p.x = (1920/2 + ((p.x - map->width/2) * (1920/map->width) / 2));
-	p.y = (1080/2 + ((p.y - map->height/2) * (1080/map->height) / 2));
-	return (p);
+	t_vector normal;
+	normal.x = (int)(1920/2 + ((p.x - map->width/2) * (1920/map->width) / 2));
+	normal.y = (int)(1080/2 + ((p.y - map->height/2) * (1080/map->height) / 2));
+	normal.colour = p.colour;
+	return (normal);
 }
 
 int main(int argc, char **argv)
@@ -94,6 +96,7 @@ int main(int argc, char **argv)
 	t_map		data;
 	t_mlx		ptr;
 	t_image		img;
+	t_vector	something;
 
 	if (argc == 1)
 		printf("%s", "No map file given\n");
@@ -105,9 +108,12 @@ int main(int argc, char **argv)
 		parsemap(&data, argv[1]);
 		for(int i = 0; i < data.height; i++)
 		{
-			for(int j = 0; j < data.width; j++)
-				put_pixel(&img, normalize(&data, data.point_data[i][j]));
-			printf("\n");
+			for(int j = 0; j < data.width; j++){
+				if (j + 1 < data.width)
+					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i][j+1]));
+				if (i + 1 < data.height)
+					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i+1][j]));
+			}	
 		}
 		mlx_put_image_to_window(ptr.mlx, ptr.win, img.img, 0, 0);
 		mlx_window(ptr.win);
