@@ -6,7 +6,7 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:39:44 by nspeedy           #+#    #+#             */
-/*   Updated: 2022/01/21 13:06:50 by nspeedy          ###   ########.fr       */
+/*   Updated: 2022/01/21 14:06:27 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,10 @@ int main(int argc, char **argv)
 					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i][j+1]));
 				if (i + 1 < data.height)
 					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i+1][j]));
+				if (i + 1 < data.height && j + 1 < data.width)
+					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i+1][j+1]));
+				if (i - 1 >= 0 && j + 1 < data.width)
+					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i-1][j+1]));
 			}	
 		}
 		mlx_put_image_to_window(ptr.mlx, ptr.win, img.img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 17:38:47 by nspeedy           #+#    #+#             */
-/*   Updated: 2022/01/21 12:37:54 by nspeedy          ###   ########.fr       */
+/*   Updated: 2022/01/21 13:48:30 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FDF_H
@@ -56,11 +56,11 @@ typedef struct t_math {
 	double	cosy;
 }	t_math;
 
-/*typedef struct	s_rgb {
+typedef struct	s_rgb {
 	int	r;
 	int	g;
 	int	b;
-}	t_rgb;*/
+}	t_rgb;
 
 void			put_pixel(t_image *img, t_vector c);
 t_vector		coord_data(int x, int y, char *data);
@@ -70,5 +70,6 @@ t_image			new_image(t_mlx *mlx, int width, int height);
 int				keypress(int key, void *data);
 void			mlx_window(t_map *win);
 void			draw_line(t_image *img, t_vector p1, t_vector p2);
+void			draw_diags(t_image *img, t_vector p1, t_vector p2);
 
 #endif
