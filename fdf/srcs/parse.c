@@ -6,7 +6,7 @@
 /*   By: nspeedy <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:39:44 by nspeedy           #+#    #+#             */
-/*   Updated: 2022/01/21 14:06:27 by nspeedy          ###   ########.fr       */
+/*   Updated: 2022/01/21 17:06:50 by nspeedy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include	<fcntl.h>
 #include	<stdio.h>
 
-static t_vector	*map_row(t_map *map, char **data)//takes t_map struct as arg
+static t_vector	*map_row(t_map *map, char **data)
 {
 	t_vector	*row;
 	int			i;
@@ -58,7 +58,7 @@ static bool	populate_rows(t_map *map, t_vector *row)
 	return (true);
 }
 
-t_vector	**parsemap(t_map *map, char *file) 
+t_vector	**parsemap(t_map *map, char *file)
 {
 	int		fd;
 	char	*line;
@@ -82,21 +82,11 @@ t_vector	**parsemap(t_map *map, char *file)
 	return (map->point_data);
 }
 
-static t_vector normalize(t_map *map, t_vector p)
-{
-	t_vector normal;
-	normal.x = (int)(1920/2 + ((p.x - map->width/2) * (1920/map->width) / 2));
-	normal.y = (int)(1080/2 + ((p.y - map->height/2) * (1080/map->height) / 2));
-	normal.colour = p.colour;
-	return (normal);
-}
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_map		data;
 	t_mlx		ptr;
 	t_image		img;
-	t_vector	something;
 
 	if (argc == 1)
 		printf("%s", "No map file given\n");
@@ -106,24 +96,10 @@ int main(int argc, char **argv)
 		ptr.win = mlx_new_window(ptr.mlx, 1920, 1080, "Screen");
 		img = new_image(ptr.mlx, 1920, 1080);
 		parsemap(&data, argv[1]);
-		for(int i = 0; i < data.height; i++)
-		{
-			for(int j = 0; j < data.width; j++){
-				if (j + 1 < data.width)
-					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i][j+1]));
-				if (i + 1 < data.height)
-					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i+1][j]));
-				if (i + 1 < data.height && j + 1 < data.width)
-					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i+1][j+1]));
-				if (i - 1 >= 0 && j + 1 < data.width)
-					draw_line(&img, normalize(&data, data.point_data[i][j]), normalize(&data, data.point_data[i-1][j+1]));
-			}	
-		}
-		mlx_put_image_to_window(ptr.mlx, ptr.win, img.img, 0, 0);
+		draw(&img, normalize(&data), &ptr);
 		mlx_window(ptr.win);
 		mlx_loop(ptr.mlx);
 		printf("Working on it\n");
 	}
 	return (0);
 }
-

@@ -17,7 +17,7 @@ t_image	new_image(t_mlx *mlx, int width, int height)
 	t_image	img;
 
 	img.img = mlx_new_image(mlx, width, height);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.ln_len, 
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.ln_len,
 			&img.endian);
 	img.width = width;
 	img.height = height;
