@@ -22,3 +22,4 @@ t_vector	coord_data(int x, int y, char *data)
 	point_data.rgb = hex_colour(ft_strchr(data, ','));
 	return (point_data);
 }
+

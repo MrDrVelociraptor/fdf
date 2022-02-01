@@ -84,9 +84,7 @@ t_vector	**parsemap(t_map *map, char *file)
 
 int	main(int argc, char **argv)
 {
-	t_map		data;
-	t_mlx		ptr;
-	t_image		img;
+	t_fdf		ptr;
 
 	if (argc == 1)
 		printf("%s", "No map file given\n");
@@ -94,9 +92,8 @@ int	main(int argc, char **argv)
 	{
 		ptr.mlx = mlx_init();
 		ptr.win = mlx_new_window(ptr.mlx, 1920, 1080, "Screen");
-		img = new_image(ptr.mlx, 1920, 1080);
-		parsemap(&data, argv[1]);
-		draw(&img, normalize(&data), &ptr);
+		parsemap(&ptr.map, argv[1]);
+		update_image(&ptr);
 		mlx_window(ptr.win);
 		mlx_loop(ptr.mlx);
 		printf("Working on it\n");

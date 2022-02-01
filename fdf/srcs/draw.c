@@ -12,28 +12,6 @@
 
 #include	"fdf.h"
 
-t_map	*normalize(t_map *map)
-{
-	int			i;
-	int			j;
-	t_vector	*curr;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-			curr = &map->point_data[i][j];
-			curr->x = (int)(1920 / 2 + ((curr->x - map->width / 2) * (1920 / map->width / 2) * 2));
-			curr->y = (int)(1080 / 2 + ((curr->y - map->width / 2) * (1920 / map->width / 2) * 2));
-			j++;
-		}
-		i++;
-	}
-	return (map);
-}
-
 t_rgb	colgrad(t_rgb c1, t_rgb c2, double percent)
 {
 	t_rgb	new;
@@ -72,7 +50,7 @@ void	draw_line(t_image *img, t_vector p1, t_vector p2)
 	}
 }
 
-void	draw(t_image *img, t_map *data, t_mlx *ptr)
+void draw(t_image *img, t_map *data)
 {
 	int		i;
 	int		j;
@@ -87,7 +65,7 @@ void	draw(t_image *img, t_map *data, t_mlx *ptr)
 				draw_line(img, data->point_data[i][j], data->point_data[i][j + 1]);
 			if (i + 1 < data->height)
 				draw_line(img, data->point_data[i][j], data->point_data[i + 1][j]);
-			if (i + 1 < data->width && j + 1 < data->width)
+			if (i + 1 < data->height && j + 1 < data->width)
 				draw_line(img, data->point_data[i][j], data->point_data[i + 1][j + 1]);
 			if (i - 1 >= 0 && j + 1 < data->width)
 				draw_line(img, data->point_data[i][j], data->point_data[i - 1][j + 1]);
@@ -95,5 +73,19 @@ void	draw(t_image *img, t_map *data, t_mlx *ptr)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(ptr->mlx, ptr->win, img->img, 0, 0);
+}
+
+void	update_image(t_fdf *ptr)
+{
+	t_image *new;
+
+	new = new_image(ptr->mlx, WIDTH, HEIGHT);
+	draw(new, normalize(&ptr->map));
+	mlx_clear_window(ptr->mlx, ptr->win);
+	if (ptr->img){
+		mlx_destroy_image(ptr->mlx, ptr->img);
+		free(ptr->img);
+	}
+	mlx_put_image_to_window(ptr->mlx, ptr->win, new->img, 0, 0);
+	ptr->img = new;
 }
