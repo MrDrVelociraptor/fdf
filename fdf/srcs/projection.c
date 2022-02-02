@@ -12,37 +12,24 @@
 
 #include "fdf.h"
 
-t_vector	normalize(t_vector s)
+t_map	*normalize(t_map *map)
 {
-	int		i;
-	int		j;
-    t_fdf   *fdf;
+	int			i;
+	int			j;
+    t_vector   *curr;
 
 	i = 0;
-	while (i < fdf->map.height)
+	while (i < map->height)
 	{
 		j = 0;
-		while (j < fdf->map.width)
+		while (j < map->width)
 		{
-            s.x += fdf->camera.x_off;
-            s.y += fdf->camera.y_off;
-			s.x = (int)(1920 / 2 + ((s.x - fdf->map.width / 2) * (1920 / fdf->map.width / 2) * fdf->camera.zoom));
-			s.y = (int)(1080 / 2 + ((s.y - fdf->map.height / 2) * (1920 / fdf->map.width / 2) * fdf->camera.zoom));
+			curr = &map->point_data[i][j];
+			curr->x = (int)(1920 / 2 + ((curr->x - map->width / 2) * (1920 / map->width / 2) * 1));
+			curr->y = (int)(1080 / 2 + ((curr->y - map->height / 2) * (1920 / map->width / 2) * 1));
 			j++;
 		}
 		i++;
 	}
-	return (s);
-}
-
-void    update_zoom(int keypress, t_fdf *fdf)
-{
-    if (keypress == XK_DOWN)
-    {
-        if (fdf->camera.zoom != 2)
-            fdf->camera.zoom -= 2;
-    }
-    else if (keypress == XK_UP)
-        fdf->camera.zoom += 2;
-    update_image(fdf);
+	return (map);
 }

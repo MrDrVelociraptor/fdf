@@ -19,6 +19,9 @@
 # include <stdbool.h>
 # include <math.h>
 
+# define WIDTH 1080
+# define HEIGHT 1920
+
 typedef struct	s_rgb {
 	int	r;
 	int	g;

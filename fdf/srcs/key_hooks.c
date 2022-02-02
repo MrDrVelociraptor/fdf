@@ -28,10 +28,6 @@ int	keypress(int key, void *data)
 
 void	mlx_window(void *win)
 {
-	t_hookz	*events;
-
-	events = NULL;
 	mlx_hook(win, 2, 1L << 0, keypress, 0);
 	mlx_hook(win, 17, 1L << 17, closefdf, 0);
-	
 }

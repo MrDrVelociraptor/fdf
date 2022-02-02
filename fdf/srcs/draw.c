@@ -50,7 +50,7 @@ void	draw_line(t_image *img, t_vector p1, t_vector p2)
 	}
 }
 
-void draw(t_image *img, t_map *data)
+void draw(t_image *img, t_map *data, t_mlx *ptr)
 {
 	int		i;
 	int		j;
@@ -73,19 +73,5 @@ void draw(t_image *img, t_map *data)
 		}
 		i++;
 	}
-}
-
-void	update_image(t_fdf *ptr)
-{
-	t_image *new;
-
-	new = new_image(ptr->mlx, WIDTH, HEIGHT);
-	draw(new, normalize(&ptr->map));
-	mlx_clear_window(ptr->mlx, ptr->win);
-	if (ptr->img){
-		mlx_destroy_image(ptr->mlx, ptr->img);
-		free(ptr->img);
-	}
-	mlx_put_image_to_window(ptr->mlx, ptr->win, new->img, 0, 0);
-	ptr->img = new;
+	mlx_put_image_to_window(ptr->mlx, ptr->win, img->img, 0, 0);
 }
