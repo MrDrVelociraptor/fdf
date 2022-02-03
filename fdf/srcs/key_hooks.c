@@ -26,8 +26,9 @@ int	keypress(int key, void *data)
 	return (0);
 }
 
-void	mlx_window(void *win)
+void	mlx_window(void *win, void *mlx)
 {
 	mlx_hook(win, 2, 1L << 0, keypress, 0);
 	mlx_hook(win, 17, 1L << 17, closefdf, 0);
+	mlx_loop(mlx);
 }

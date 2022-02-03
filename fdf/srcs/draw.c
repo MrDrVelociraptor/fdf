@@ -50,28 +50,35 @@ void	draw_line(t_image *img, t_vector p1, t_vector p2)
 	}
 }
 
-void draw(t_image *img, t_map *data, t_mlx *ptr)
+void draw(t_image *img, t_map *map)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	while (i < data->height)
+	while (i < map->height)
 	{
 		j = 0;
-		while (j < data->width)
+		while (j < map->width)
 		{
-			if (j + 1 < data->width)
-				draw_line(img, data->point_data[i][j], data->point_data[i][j + 1]);
-			if (i + 1 < data->height)
-				draw_line(img, data->point_data[i][j], data->point_data[i + 1][j]);
-			if (i + 1 < data->height && j + 1 < data->width)
-				draw_line(img, data->point_data[i][j], data->point_data[i + 1][j + 1]);
-			if (i - 1 >= 0 && j + 1 < data->width)
-				draw_line(img, data->point_data[i][j], data->point_data[i - 1][j + 1]);
+			if (j + 1 < map->width)
+				draw_line(img, map->point_data[i][j], map->point_data[i][j + 1]);
+			if (i + 1 < map->height)
+				draw_line(img, map->point_data[i][j], map->point_data[i + 1][j]);
+			if (i + 1 < map->height && j + 1 < map->width)
+				draw_line(img, map->point_data[i][j], map->point_data[i + 1][j + 1]);
+			if (i - 1 >= 0 && j + 1 < map->width)
+				draw_line(img, map->point_data[i][j], map->point_data[i - 1][j + 1]);
 			j++;
 		}
 		i++;
 	}
-	mlx_put_image_to_window(ptr->mlx, ptr->win, img->img, 0, 0);
+}
+
+void	iso(t_vector *curr)
+{
+	curr->prev_x = curr->x;
+	curr->prev_y = curr->y;
+	curr->x = (curr->prev_x - curr->prev_y) * cos(0.5);
+	curr->y = (curr->prev_x + curr->prev_y) * sin(0.5) - curr->z;
 }
